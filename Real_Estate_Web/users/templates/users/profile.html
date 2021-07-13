@@ -1,0 +1,38 @@
+{% extends 'property/header.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="card bg-light">
+			<article class="card-body mx-auto" style="max-width: 400px;">
+				<div class="card" style="width: 18rem;">
+					<img class="card-img-top" src="{{ user.profile.image.url }}" alt="Card image cap">
+					<div class="card-body">
+						<h3 class="card-title">{{ user.username }}</h3>
+						<h6 class="card-title">{{ user.email }}</h6>
+						<p class="text-left"><a href="{% url 'agent-single' user.id  %}">Visit Properties</a></p>
+					</div>
+				</div>
+				<form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+					<h3 class="card-title">Profile Info</h3>
+					{{ u_form|crispy }}
+					{{ p_form|crispy }}
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-block">Update</button>
+					</div> <!-- form-group// -->
+					<p class="text-center"><a href="{% url 'password_change' %}">Want to change your password?</a></p>
+				</form>
+			</article>
+		</div> <!-- card.// -->
+	</div>
+	<div class="col-md-6">
+		<div class="card bg-light">
+			<article class="card-body mx-auto" style="max-width: 400px;">
+
+			</article>
+		</div> <!-- card.// -->
+	</div>
+</div>
+
+{% endblock %}

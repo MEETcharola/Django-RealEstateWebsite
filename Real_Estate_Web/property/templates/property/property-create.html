@@ -1,0 +1,21 @@
+{% extends 'property/header.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/register.css' %}">
+<div class="card bg-light">
+	<article class="card-body mx-auto" style="max-width: 400px;">
+		<h4 class="card-title mt-3 text-center">Post Property</h4>
+		{% if form_type == None %}
+			{% include 'property/property-create-partial.html' %}
+		{% endif %}
+		<form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+			{{ pro_form|crispy }}
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary btn-block"> Create Property</button>
+			</div> <!-- form-group// -->
+			<p class="text-center"><a href="{% url 'property-list' %}">Visit all property?</a></p>
+		</form>
+	</article>
+</div> <!-- card.// -->
+{% endblock %}

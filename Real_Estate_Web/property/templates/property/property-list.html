@@ -1,0 +1,185 @@
+{% extends 'property/header.html' %}
+{% block content %}
+<main id="main">
+
+    <!-- ======= Intro Single ======= -->
+    <section class="intro-single">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-8">
+                    <div class="title-single-box">
+                        <h1 class="title-single">Our Amazing Properties</h1>
+                        <span class="color-text-a">Grid Properties</span>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'dashboard' %}">Home</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                Properties Grid
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Intro Single-->
+
+
+    <!-- ======= Property Grid ======= -->
+    <section class="property-grid grid">
+        <div class="container">
+            <div class="row">
+                {% for property in properties %}
+                <div class="col-md-4">
+                    <div class="card-box-a card-shadow">
+                        <div class="img-box-a">
+                            <img src="{{ property.photo_main.url }}" alt="" class="img-a img-fluid"
+                                 style="width: 1000px;height:350px">
+                        </div>
+                        <div class="card-overlay">
+                            <div class="card-overlay-a-content">
+                                <div class="card-header-a">
+                                    <h2 class="card-title-a">
+                                        <a href="#">{{ property.city }}
+                                            <br/>{{ property.address }}</a>
+                                    </h2>
+                                </div>
+                                <div class="card-body-a">
+                                    <div class="price-box d-flex">
+                                        {% if property.property_for == "Rent" %}
+                                        <span class="price-a">rent | {{ property.price }}</span>
+                                        {% else %}
+                                        <span class="price-a">price | {{ property.price }}</span>
+                                        {% endif %}
+                                    </div>
+                                    <a href="{% url 'property-single' property.id property.property_type %}"
+                                       class="link-a">Click here to view
+                                        <span class="ion-ios-arrow-forward"></span>
+                                    </a>
+                                </div>
+                                <div class="card-footer-a">
+                                    <ul class="card-info d-flex justify-content-around">
+                                        {% if property.property_type != "PG" and property.property_type != "Plot" %}
+                                        <li>
+                                            <h4 class="card-info-title">Area</h4>
+                                            <span>{{ property.super_area }}m
+                                                <sup>2</sup>
+                                            </span>
+                                        </li>
+                                        {%endif%}
+                                        {% if property.property_type == "Plot" %}
+                                        <li>
+                                            <h4 class="card-info-title">Area</h4>
+                                            <span>{{ property.plot_area }}m
+                                                <sup>2</sup>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <h4 class="card-info-title">Boundary Wall</h4>
+                                            <span>{{ property.boundry_wall_status }}</span>
+                                        </li>
+                                        <li>
+                                            <h4 class="card-info-title">Floor allowed</h4>
+                                            <span>{{ property.floors_allowed_for_construction }}</span>
+                                        </li>
+                                        {%endif%}
+                                        {% if property.property_type == "Commercial" %}
+                                            <li>
+                                                <h4 class="card-info-title">Washrooms</h4>
+                                                <span>{{ property.washrooms }}</span>
+                                            </li>
+                                        {% endif %}
+                                        {% if property.property_type == "Residential" %}
+                                            <li>
+                                                <h4 class="card-info-title">Beds</h4>
+                                                <span>{{ property.bathrooms }}</span>
+                                            </li>
+                                            <li>
+                                                <h4 class="card-info-title">Baths</h4>
+                                                <span>{{ property.bathrooms }}</span>
+                                            </li>
+                                        {% endif %}
+                                        {% if property.property_type == "Residential" or property.property_type == "Commercial" %}
+                                            <li>
+                                                <h4 class="card-info-title">Furnishing</h4>
+                                                <span>{{ property.furnishing }}</span>
+                                            </li>
+                                        {% endif %}
+                                        {% if property.property_type == "PG" %}
+                                            <li>
+                                                <h4 class="card-info-title">Furnishing</h4>
+                                                <span>{{ property.furnishing }}</span>
+                                            </li>
+                                             <li>
+                                                <h4 class="card-info-title">Monthly Rent</h4>
+                                                <span>{{ property.monthly_rent }}</span>
+                                            </li>
+                                            <li>
+                                                <h4 class="card-info-title">Sec Deposite</h4>
+                                                <span>{{ property.security_deposit }}</span>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {% if properties.has_other_pages %}
+                    <ul class="pagination">
+                        {% if properties.has_previous %}
+                        <li class="page-item">
+                            <a
+                                    href="?page={{ properties.previous_page_number }}"
+                                    class="page-link"
+                            >&laquo;</a
+                            >
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link">&laquo;</a>
+                        </li>
+                        {% endif %}
+                        {% for i in properties.paginator.page_range %}
+                        {% if properties.number == i %}
+                        <li class="page-item active">
+                            <a class="page-link">{{ i }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if properties.has_next %}
+                        <li class="page-item">
+                            <a href="?page={{ properties.next_page_number }}" class="page-link"
+                            >&raquo;</a
+                            >
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link">&raquo;</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section><!-- End Property Grid Single-->
+
+</main><!-- End #main -->
+
+{% endblock %}
+
+

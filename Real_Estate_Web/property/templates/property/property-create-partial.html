@@ -1,0 +1,21 @@
+{% block content %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+        <form method="POST" action="{% url 'property-create-partial' %}" enctype="multipart/form-data" id="dynamic-form"> {% csrf_token %}
+            <div class="form-group">
+                <label for="type">Type</label>
+                <select class="form-control form-control-lg form-control-a" id="property-type" name="property-type">
+                    <option selected="true" disabled="disabled" >Any</option>
+                    <option> Residential </option>
+                    <option> Commercial </option>
+                    <option> Plot </option>
+                    <option> PG </option>
+                </select>
+            </div>
+<!--            <div class="form-group">-->
+<!--                <button type="submit" class="btn btn-primary btn-block"></button>-->
+<!--            </div> &lt;!&ndash; form-group// &ndash;&gt;-->
+        </form>
+
+{% endblock %}

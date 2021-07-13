@@ -1,0 +1,221 @@
+{% extends 'property/header.html' %}
+{% block content %}
+{% load static %}
+
+<main id="main">
+
+    <!-- ======= Intro Single ======= -->
+    <section class="intro-single">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-8">
+                    <div class="title-single-box">
+                        <h1 class="title-single">{{ agent.username }}</h1>
+                        <span class="color-text-a">Agent</span>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'dashboard' %}">Home</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'agent-list' %}">Agents</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                {{ agent.username }}
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Intro Single -->
+
+    <!-- ======= Agent Single ======= -->
+    <section class="agent-single">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="agent-avatar-box">
+                                <img src="{{ agent.profile.image.url }}" alt="" class="agent-avatar img-fluid" style="width: 1000px;height: 500px">
+                            </div>
+                        </div>
+                        <div class="col-md-5 section-md-t3">
+                            <div class="agent-info-box">
+                                <div class="agent-title">
+                                    <div class="title-box-d">
+                                        <h3 class="title-d">{{ agent.username }}
+                                            <br>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="agent-content mb-3">
+                                    <p class="content-d color-text-a">
+                                        Sed porttitor lectus nibh. Praesent sapien massa, convallis a pellentesque nec,
+                                        egestas non nisi.
+                                        Vivamus suscipit tortor
+                                        eget felis porttitor volutpat. Vivamus suscipit tortor eget felis porttitor
+                                        volutpat.
+                                    </p>
+                                    <div class="info-agents color-a">
+                                        <p>
+                                            <strong>Mobile: </strong>
+                                            <span class="color-text-a"> {{agent.profile.contact_number}} </span>
+                                        </p>
+                                        <p>
+                                            <strong>Email: </strong>
+                                            <span class="color-text-a"> {{ agent.email }} </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="socials-footer">
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="fa fa-facebook" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="fa fa-twitter" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="fa fa-instagram" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="fa fa-pinterest-p" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="fa fa-dribbble" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 section-t8">
+                    <div class="title-box-d">
+                        <h3 class="title-d">My Properties</h3>
+                    </div>
+                </div>
+                <div class="row property-grid grid">
+                    <div class="col-sm-12">
+
+                    </div>
+                    {% for property in properties %}
+                    <div class="col-md-4">
+                        <div class="card-box-a card-shadow">
+                            <div class="img-box-a">
+                                <img src="{{ property.photo_main.url }}" alt="" class="img-a img-fluid"
+                                     style="width:1000px;height:350px">
+                            </div>
+                            <div class="card-overlay">
+                                <div class="card-overlay-a-content">
+                                    <div class="card-header-a">
+                                        <h2 class="card-title-a">
+                                            <a href="#">{{ property.city }}
+                                                <br/>{{ property.address }}</a>
+                                        </h2>
+                                    </div>
+                                    <div class="card-body-a">
+                                        <div class="price-box d-flex">
+                                            {% if property.property_for == "Rent" %}
+                                            <span class="price-a">rent | {{ property.price }}</span>
+                                            {% else %}
+                                            <span class="price-a">price | {{ property.price }}</span>
+                                            {% endif %}
+                                        </div>
+                                        <a href="{% url 'property-single' property.id property.property_type %}"
+                                           class="link-a">Click here to view
+                                            <span class="ion-ios-arrow-forward"></span>
+                                        </a>
+                                    </div>
+                                    <div class="card-footer-a">
+                                        <ul class="card-info d-flex justify-content-around">
+                                            {% if property.property_type != "PG" and property.property_type != "Plot" %}
+                                            <li>
+                                                <h4 class="card-info-title">Area</h4>
+                                                <span>{{ property.super_area }}m
+                                                <sup>2</sup>
+                                                </span>
+                                            </li>
+                                            {%endif%}
+                                            {% if property.property_type == "Plot"  %}
+                                                <li>
+                                                    <h4 class="card-info-title">Area</h4>
+                                                    <span>{{ property.plot_area }}m
+                                                    <sup>2</sup>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <h4 class="card-info-title">BoundaryWall</h4>
+                                                    <span>{{ property.boundry_wall_status }}</span>
+                                                </li>
+                                                <li>
+                                                    <h4 class="card-info-title">FloorsAllowed</h4>
+                                                    <span>{{ property.floors_allowed_for_construction }}</span>
+                                                </li>
+                                            {% endif %}
+                                            {% if property.property_type == "Residential" %}
+                                                <li>
+                                                    <h4 class="card-info-title">Beds</h4>
+                                                    <span>{{ property.bedrooms }}</span>
+                                                </li>
+                                                <li>
+                                                    <h4 class="card-info-title">Baths</h4>
+                                                    <span>{{ property.bathrooms }}</span>
+                                                </li>
+                                            {% endif %}
+                                            {% if property.property_type == "Commercial" %}
+                                                <li>
+                                                    <h4 class="card-info-title">Washrooms</h4>
+                                                    <span>{{ property.washrooms }}</span>
+                                                </li>
+                                                <li>
+                                                    <h4 class="card-info-title">Cafeteria</h4>
+                                                    <span>{{ property.cafeteria }}</span>
+                                                </li>
+                                            {% endif %}
+                                            {% if property.property_type == "PG" %}
+                                                <li>
+                                                    <h4 class="card-info-title">Rent</h4>
+                                                    <span>{{ property.monthly_rent }}</span>
+                                                </li>
+                                                <li>
+                                                    <h4 class="card-info-title">Sec. Deposite</h4>
+                                                    <span>{{ property.security_deposit }}</span>
+                                                </li>
+                                            {% endif %}
+                                            {% if property.property_type != "Plot" %}
+                                            <li>
+                                                <h4 class="card-info-title">Furnishing</h4>
+                                                <span>{{ property.furnishing }}</span>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section><!-- End Agent Single -->
+
+</main><!-- End #main -->
+
+{% endblock %}
