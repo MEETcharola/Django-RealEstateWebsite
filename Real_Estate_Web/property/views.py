@@ -465,7 +465,7 @@ def property_image_upload(request, property_id, property_type):
 #     send_mail('Property contact',
 #         request.POST[''],
 #         request.user.email, #FROM
-#         ['meetcharola.inexture@gmail.com'], #TO
+#         ['admin@gmail.com'], #TO
 #         fail_silently=False)
 #     return render(request, 'property/property-list.html')
 
@@ -484,7 +484,7 @@ def contact(request):
         send_mail(request.POST.get('subject'),
               request.POST.get('message'),
               request.POST.get('email'),  # FROM
-              [request.POST.get('email'), 'meetcharola.inexture@gmail.com'],  # TO
+              [request.POST.get('email'), 'admin@gmail.com'],  # TO
               fail_silently=False)
 
         return render(request, 'property/dashboard.html')
